@@ -72,7 +72,11 @@ namespace IT2163_ASSIGNMENT_203417D
             {
                 if (dbSalt != null && dbSalt.Length > 0 && dbHash != null && dbHash.Length > 0)
                 {
-                    
+
+                    if (ValidateCaptcha())
+                    {
+                        
+                     
                     string pwdWithSalt = pwd + dbSalt;
                     byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
                     string userHash = Convert.ToBase64String(hashWithSalt);
@@ -87,6 +91,7 @@ namespace IT2163_ASSIGNMENT_203417D
 
 
                         Response.Redirect("Loggedinpage.aspx", false);
+                    }
                     }
 
 
@@ -104,18 +109,7 @@ namespace IT2163_ASSIGNMENT_203417D
             finally { }
 
 
-            if (ValidateCaptcha())
-            {
-                if (login_email.Text.Trim().Equals("u") && login_password.Text.Trim().Equals("p"))
-                {
-                    Session["LoggedIn"] = login_email.Text.Trim();
-
-                    string guid = Guid.NewGuid().ToString();
-                    Session["AuthToken"] = guid;
-
-                    Response.Cookies.Add(new HttpCookie("AuthToken", guid));
-                }
-            }
+            
         }
 
         protected string getDBHash(string userid)

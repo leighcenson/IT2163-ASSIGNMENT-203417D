@@ -22,7 +22,7 @@ namespace IT2163_ASSIGNMENT_203417D
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-
+            HttpContext.Current.Response.AddHeader("X-Frame-Options", "DENY");
         }
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
